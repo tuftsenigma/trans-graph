@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.button {
+    background-color: black; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+#title {
+  font-size: 20px; 
+  font-weight: 30px; 
+}
+</style>
+</head>
+<body>
+
+<p>
+<div id=title>Comparing Rates of Violence </div> <br>
+Click button to see statistics <br>
+<button type="button" class=button onclick="suicide()">Suicide Rates</button>
+<button type="button" class=button onclick="homeless()">Homelessness Rate</button>
+<button type="button" class=button onclick="unemployment()">Unemployment Rate</button>
+<div id="columnchart_values" style="width: 900px; height: 300px;"></div> 
+</p>
+
+</body>
+</html> 
+
+ <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load("current", {packages:['corechart']});
+    //google.charts.setOnLoadCallback(drawChart);
+
+    var data; 
+
+    function unemployment(){
+      data = google.visualization.arrayToDataTable([
+          ["Group", "Percentage", { role: "style" } ],
+          ["Overall U.S. Population", 7.0, "green"],
+          ["Transgender U.S. Population", 14.0, "blue"]
+        ]);
+        drawChart();
+    }
+
+    function suicide(){
+      data = google.visualization.arrayToDataTable([
+          ["Group", "Percentage", { role: "style" } ],
+          ["Overall U.S. Population", 4.6, "green"],
+          ["Transgender U.S. Population", 41.0, "blue"]
+        ]);
+      drawChart(); 
+    }
+
+    function homeless(){
+      data = google.visualization.arrayToDataTable([
+          ["Group", "Percentage", { role: "style" } ],
+          ["Overall U.S. Population", 1.0, "green"],
+          ["Transgender U.S. Population", 2.0, "blue"]
+        ]);
+      drawChart(); 
+    }
+
+    function drawChart() {
+
+      var view = new google.visualization.DataView(data);
+      view.setColumns([0, 1,
+                       { calc: "stringify",
+                         sourceColumn: 1,
+                         type: "string",
+                         role: "annotation" },
+                       2]);
+
+      var options = {
+        width: 600,
+        height: 400,
+        bar: {groupWidth: "95%"}, vAxis: {
+          title: 'Percentage',
+          bold: false,
+          italic: false
+        },
+        legend: { position: "none" },
+      };
+      var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
+      chart.draw(view, options);
+  }
+  </script>
+
+
+
+
